@@ -1,0 +1,38 @@
+create_new_article: Créer un nouvel article
+
+Yes: Oui
+No: Non
+
+home:
+    message_1: Bienvenue sur la session %poe%
+    message_2: Bonjour vous êtes bien sur la session %poe%
+    message_3: La session %poe% vous accueil avec plaisir
+
+# réservé à l'entité article 
+
+article:
+      title: Titre
+      author: Auteur
+      categorie: Catégorie
+      summary: Résumé
+      content: Contenu
+      created_at: Crée à
+      updated_at: Mise à jour à
+      published: Publié
+      action: Actions
+      show: Afficher
+      modif: Modifier
+      
+      new: 
+          success: Votre article %title% est enregisté.
+      edit: 
+          success: Votre article %title% est enregisté.
+      form:
+          title: {label: Votre Titre}
+          categorie: 
+              label: Catégorie
+              placeholder: Sélectionnez une catégorie
+          summary: {label: Votre résumé}
+          content: {label: Votre contenu}
+          published: {label: Publié}
+          

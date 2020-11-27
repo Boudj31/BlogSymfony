@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier mes données{% endblock %}
+
+{% block content %}
+
+<h1> Modifier mon profil </h1>
+<hr>
+<div class="form-group">
+{{ form_start(form_edit) }}
+
+{{ form_widget(form_edit) }}
+
+<button type="submit" class="btn btn-secondary"> Enregister ! </button>
+
+{{ form_end(form_edit) }}
+</div>
+<hr>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil{% endblock %}
+
+{% block content %}
+<h1>Mon profil </h1> <br>
+<ul>
+    <li>Email: {{ profile.email}}</li>
+    <li>Nom: {{ profile.lastname}}</li>
+    <li>Prénom: {{ profile.firstname}}</li>
+    <li>Pseudo: {{ profile.author ? profile.author.pseudo : ''}}</li>
+</ul>
+<button class="btn btn-secondary">
+<a style="color: white; " href="{{ path('edit_profile',{'id': app.user.id}) }}">Editer le profil</a>
+</button>
+<button class="btn btn-secondary">
+<a style="color: white; "href="{{ path('edit_password',{'id': app.user.id}) }}">Editer le mot de passe</a>
+</button>
+
+{% endblock %}

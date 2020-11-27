@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Article{% endblock %}
+
+{% block content %}
+    <h1>{{ 'create_new_article' | trans }}</h1>
+
+        {{ include('article/_form.html.twig') }}
+    <br>
+
+    <button class="btn btn-secondary">
+     <a style="color: white;" href="{{ path('article_index') }}">back to list</a>
+     </button>
+
+{% endblock %}
