@@ -55,11 +55,12 @@ class ArticleController extends AbstractController
     {
         $article = new Article();
 
-        if($this->getUser()->getAuthor() === null) {
+      /*  if($this->getUser()->getAuthor() === null) {
             $this->addFlash('warning', 'Vous devez renseigner votre profil');
 
             return $this->redirectToRoute('edit_profile', ['id' => $this->getUser()->getId() ]);
         }
+        */
 
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);

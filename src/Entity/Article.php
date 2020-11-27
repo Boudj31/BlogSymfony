@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ArticleRepository;
+use Symfony\Component\HttpFoundation\File\File;
 use Doctrine\ORM\Mapping as ORM;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
@@ -24,16 +25,19 @@ class Article
      */
     private $title;
     
-    /**
-     * @ORM\Column(type="string", length=255)
+     /**
+     * @Vich\UploadableField(mapping="product_image", fileNameProperty="imageName")
+     * 
+     * @var File|null
      */
-    private $fiiifilename;
+    private $imageFile;
 
     /**
-     * @var File
-     * @Vich\UploadableField(mapping="property_image", fileNameProperty="filename")
+     * @ORM\Column(type="string")
+     *
+     * @var string|null
      */
-    private $imageFiiile;
+    private $imageName;
 
     /**
      * @ORM\Column(type="text")
@@ -72,10 +76,7 @@ class Article
      */
     private $categorie;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $avatar;
+    
 
     public function getId(): ?int
     {
@@ -183,43 +184,36 @@ class Article
         return $this;
     }
 
-    public function getAvatar(): ?string
+    /**
+     *
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile|null $imageFile
+     */
+    public function setImageFile(?File $imageFile = null): void
     {
-        return $this->avatar;
+        $this->imageFile = $imageFile;
+
+        if (null !== $imageFile) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedAt = new \DateTimeImmutable();
+        }
     }
 
-    public function setAvatar(string $avatar): self
-    {
-        $this->avatar = $avatar;
-
-        return $this;
-    }
-
-    public function getFilename(): ?string
-    {
-        return $this->filename;
-    }
-
-    public function setFilename(string $filename): self
-    {
-        $this->filename = $filename;
-
-        return $this;
-    }
-
-
-    public function getImageFile(): ?file
+    public function getImageFile(): ?File
     {
         return $this->imageFile;
     }
 
-    public function setImageFile(file $imageFile): self
+    public function setImageName(?string $imageName): void
     {
-        $this->imageFile = $imageFile;
-
-        return $this;
+        $this->imageName = $imageName;
     }
 
+    public function getImageName(): ?string
+    {
+        return $this->imageName;
+    }
+    
 
 }
 
