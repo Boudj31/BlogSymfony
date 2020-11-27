@@ -22,6 +22,7 @@ article:
       action: Actions
       show: Afficher
       modif: Modifier
+      imageFile: Fichier
       
       new: 
           success: Votre article %title% est enregisté.

@@ -37,7 +37,7 @@
             <tr>
                 
                 <td>{{ article.title}}</td>
-                <td><img src="images/products{{article.imageFile}}" alt="mama"></td>
+                <td><img src="{{ vich_uploader_asset(article, 'imageFile') }}" alt="" class="img-fluid"><td>
                 <td>{{ article.author ? article.author.pseudo : 'nc' }}</td>
                 <td>{{ article.categorie ? article.categorie.name : 'nc' }}</td>
                 <td>{{ article.summary|length > 100 ? article.summary|slice(0,100) : article.summary }}</td>

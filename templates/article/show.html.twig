@@ -37,10 +37,40 @@
             </tr>
         </tbody>
     </table>
-
+   
     <a href="{{ path('article_index') }}">back to list</a>
 
-    <a href="{{ path('article_edit', {'id': article.id}) }}">edit</a>
+   
+	{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+		<a href="{{ path('article_edit', {'id': article.id}) }}">edit</a>
 
-    {{ include('article/_delete_form.html.twig') }}
+		{{ include('article/_delete_form.html.twig') }}
+	{% endif %}
+
+	<h3>Les commentaires :</h3>
+
+	<section>
+		{{ form_start(form_create) }}
+		{{ form_widget(form_create) }}
+		<button class="btn btn-success">{{ button_label|default('Commenter') }}</button>
+		{{ form_end(form_create) }}
+	</section>
+
+	<div class="col-12 mt-4">
+		{% for comment in comments %}
+			<div class="card mb-3">
+				<div class="card-body">
+					<strong>{{ comment.author ? comment.author.pseudo : ''}}</strong>
+					<p class="comment_date">Publié le {{ article.createdAt ? article.createdAt|date('Y-m-d H:i') : '' }} </p>
+					<p class="card-text">{{ comment.content }}</p>
+				</div>
+			</div>
+		{% else %}
+			<div class="alert alert-danger" role="alert">
+				Pas de commentaire pour le moment
+			</div>
+		{% endfor %}
+	</div>
+
 {% endblock %}
+
