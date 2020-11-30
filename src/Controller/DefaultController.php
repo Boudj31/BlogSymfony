@@ -10,6 +10,7 @@ use App\Service\MessageGenerator;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -72,9 +73,8 @@ class DefaultController extends AbstractController
     /**
      * @Route("/profile/{id}/edit", name="edit_profile", methods={"GET","POST","PUT"})
      */
-    public function editProfile(User $user, Request $request, EntityManagerInterface $entityManager): Response
+    public function editProfile(User $user, Request $request, EntityManagerInterface $entityManager ): Response
     {
-
         $form = $this->createForm(UserType::class, $user,[
             'method' => 'put'
         ]);

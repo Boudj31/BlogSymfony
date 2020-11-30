@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Résultat des recherches {% endblock %}
+
+{% block content %}
+
+ Nombre de resulat de votre recherche : {{ results | length }}
+
+ <ul>
+    {% for result in results %}
+     <li>
+       <h5>{{result.title}}</h5>
+       <p>{{result.summary}}</p>
+       <p>{{result.content}}</p>
+       <a href="{{ path('article_show', {'id': result.id}) }}">Voir la suite</a>
+
+     </li>
+
+     {% else %}
+
+     <li> Aucun resulat</li>
+
+     {% endfor %}
+ </ul>
+
+{% endblock %}

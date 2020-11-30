@@ -4,6 +4,10 @@
 
 {% block content %}
 <h1>Mon profil </h1> <br>
+
+<img src="{{ vich_uploader_asset(profile, 'avatarFile') }}" alt="" class="img-fluid">
+
+      
 <ul>
     <li>Email: {{ profile.email}}</li>
     <li>Nom: {{ profile.lastname}}</li>

@@ -15,6 +15,7 @@ use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class RegistrationFormType extends AbstractType
 {
@@ -28,6 +29,7 @@ class RegistrationFormType extends AbstractType
                     ])
                 ]
             ])
+            ->add('avatarFile', VichImageType::class)
             ->add('firstname', TextType::class)
             ->add('lastname', TextType::class)
             ->add('agreeTerms', CheckboxType::class, [
@@ -81,3 +83,4 @@ class RegistrationFormType extends AbstractType
         ]);
     }
 }
+

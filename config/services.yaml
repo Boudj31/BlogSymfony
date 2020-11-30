@@ -6,6 +6,7 @@
 parameters:
     poe_title: 'POE Toulouse'
     webmaster_mail: 'dzrachid@hotmail.fr'
+    app.avatar.path: '/uploads/avatar'
 
 services:
     # default configuration for services in *this* file

@@ -57,6 +57,7 @@ class ContactController extends AbstractController
         ]);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()) {
+            
             $this->entityManager->flush();
             $this->addFlash('success', 'le contact à bien été modifier');
 

@@ -5,11 +5,15 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
+ * @Vich\Uploadable()
  */
 class User implements UserInterface
 {
@@ -50,6 +54,27 @@ class User implements UserInterface
      * @ORM\OneToOne(targetEntity=Author::class, mappedBy="user", cascade={"persist", "remove"})
      */
     private $author;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $updateAt;
+    
+     /**
+     * @Vich\UploadableField(mapping="avatar_image", fileNameProperty="avatar")
+     * 
+     * @var File|null
+     */
+    private $avatarFile;
+
+    /**
+     * @ORM\Column(type="string")
+     *
+     * @var string|null
+     */
+    private $avatar;
+
+
 
     public function getId(): ?int
     {
@@ -170,4 +195,49 @@ class User implements UserInterface
 
         return $this;
     }
+
+    public function getUpdateAt(): ?\DateTimeInterface
+    {
+        return $this->updateAt;
+    }
+
+    public function setUpdateAt(?\DateTimeInterface $updateAt): self
+    {
+        $this->updateAt = $updateAt;
+
+        return $this;
+    }
+
+     /**
+     *
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile|null $avatarFile
+     */
+    public function setAvatarFile(?File $avatarFile = null): void
+    {
+        $this->avatarFile = $avatarFile;
+
+        if (null !== $avatarFile) {
+
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+    }
+
+    public function getAvatarFile(): ?File
+    {
+        return $this->avatarFile;
+    }
+
+    public function setAvatar(?string $avatar): void
+    {
+        $this->avatar = $avatar;
+    }
+
+    public function getAvatar(): ?string
+    {
+        return $this->avatar;
+    }
+    
+
+
 }
+
