@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block content %}
+
+{{form_start(form_mail)}}
+{{form_row(form_mail.mail, {'value': app.user ? app.user.email : ''})}}
+{{form_row(form_mail.name, {'value': app.user ? app.user.author.pseudo : ''})}}
+{{form_row(form_mail.object)}}
+{{form_row(form_mail.message)}}
+<input type="submit" value="Envoyer mon message" class="btn btn-success">
+{{form_end(form_mail)}}
+
+{% endblock %}

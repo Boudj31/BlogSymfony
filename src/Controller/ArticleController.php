@@ -124,6 +124,7 @@ class ArticleController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            
             $article->setUpdateAt(new\DateTime());
             $entityManager->flush();
 

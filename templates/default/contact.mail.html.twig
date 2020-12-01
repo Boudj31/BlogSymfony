@@ -1,0 +1,7 @@
+<h1>{{title}}</h1>
+
+<p>Message provenant de {{data.name}} ({{data.mail}}) : </p>
+<h4>Objet du mail : {{data.object}}</h4>
+<h4>Envoyé le : {{ day_data | date('d - m - Y')}}</h4>
+<h4>Message :</h4>
+<p>{{data.message | nl2br}}</p>

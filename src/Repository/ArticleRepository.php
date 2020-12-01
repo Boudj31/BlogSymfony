@@ -37,6 +37,18 @@ class ArticleRepository extends ServiceEntityRepository
           ->getOneOrNullResult();
    }
 
+   // SELECT * WHERE article WHERE title LIKE '%P%' OR content LIKE '%mot%' OR summary LIKE '%mot%'
+   public function findByWord(string $word)
+   {
+       return ($queryBuilder = $this->createQueryBuilder('a'))
+           ->where($queryBuilder->expr()->like('a.title', ':word'))
+           ->orWhere($queryBuilder->expr()->like('a.summary', ':word'))
+           ->orWhere($queryBuilder->expr()->like('a.content', ':word'))
+           ->setParameter('word', '%'.$word.'%')
+           ->getQuery()
+           ->getResult();
+   }
+
     // /**
     //  * @return Article[] Returns an array of Article objects
     //  */

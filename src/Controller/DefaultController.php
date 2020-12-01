@@ -4,17 +4,20 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\ChangePasswordType;
+use App\Form\MailType;
+use App\Form\SearchEngineType;
 use App\Form\UserType;
 use App\Repository\ArticleRepository;
+use App\Service\ContactMailer;
 use App\Service\MessageGenerator;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class DefaultController extends AbstractController
 {
@@ -95,6 +98,32 @@ class DefaultController extends AbstractController
             'form_edit' => $form->createView(),
         ]);
     }
+    /**
+     * @Route("/contact_us", name="contact_us", methods={"GET", "POST"})
+     */
+     public function contacter(
+        Request $request, 
+        TranslatorInterface $translator,
+        ContactMailer $mailer
+    ): Response {
+        
+        $form = $this->createForm(MailType::class, null);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $mailer->sendMail($form->getData());
+            $this->addFlash('success', $translator->trans('contact_us.message.success'));
+
+            return $this->redirectToRoute('default');
+        }
+
+        return $this->render('/default/mail.contact.html.twig', [
+            'form_mail' => $form->createView(),
+        ]);
+    }
+
+
+
 
     /**
      * @Route("/profile/{id}", name="profile"), methods={"GET"})
@@ -106,5 +135,36 @@ class DefaultController extends AbstractController
         ]);
        }
 
-    
+
+       public function getSearchForm()
+       {
+           $form = $this->createForm(SearchEngineType::class, null, [
+               'method' => 'get',
+               'action' => $this->generateUrl('search'),
+           ]);;
+           return $this->render('default/_search_form.html.twig', [
+               'search_form' => $form->createView(),
+           ]);
+       }
+   
+   
+       /**
+        * @Route("/search", name="search", methods={"GET"})
+        */
+       public function search(Request $request, ArticleRepository $articleRepository): Response
+       {
+           $results = null;
+           if ('GET' === $request->getMethod() && $request->query->has('search')) {
+               $results = $articleRepository->findByWord(
+                   $request->query->get('search_engine')['word']
+               );
+           }
+   
+           return $this->render('/default/search.html.twig', [
+               'results' => $results,
+               // Si recherche = null alors affiche tout les article
+               // 'results' => $results ? $results : $articleRepository->findAll(),
+           ]);
+       }
+
 }
